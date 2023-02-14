@@ -1,0 +1,384 @@
+
+
+
+			  	Welcome To  Advanced Java(Servlet,JSP and Bean) !!!
+
+
+
+		  Content :
+
+		  Duration :  2 Days
+
+				 2 hr       BR/LAB      1 hr
+			      2.00 - 4.00   30 min  4.30 - 5.30 (IST)
+
+		  Pre-requisites :  Core Java
+	
+
+
+
+https://github.com/Amit202020/J2EE-With-Servlet
+
+	 
+TOPICS:
+Web Application Technologies
+Servlet Introduction
+J2EE versions
+MVC in a Java EE Web Application
+Lab : HelloWorld
+
+
+HTTP Revisited
+Request and Response Process
+Servlet Life Cycle: Overview 
+Servlet Life Cycle and Annotations
+Servlets and Threading
+Developing a Simple HTTP Servlet.
+LAB- Login 
+
+
+Collecting Data from the User
+How Form Data Is Sent in an HTTP Request
+Developing a Servlet That Retrieves Form Parameters
+Developing Web Applications Using Session Management
+Using Cookies for Session Management
+Using URL Rewriting for Session Management
+
+
+JSP Introduction
+
+
+
+
+			//Web Application Technologies
+
+
+			//Web server and application server
+
+			- Web Server  		and 		Application Server
+			 Ex- apache , tomcat                   Ex- jboss , weblogic  
+
+			1. It is used to execute              1. It is used to execute
+			web component.                          application component.
+
+			2. ex. servlet , jsp , bean           2. ejb , bc4j , adfbc , spring bc
+
+
+			3. Using web component we can         3.Using application componnet
+			create Simple Web Application.         we can create enterprise level
+								application.
+
+							      4. Enterprise Level app
+								- multiple host/server
+			4. single host/server			- distributed
+								- persistance
+								- web service
+								- security with JAAS
+								- multithreaded
+								- location transparancy
+
+
+			//Servlet Introduction
+				1. It is a  Web Component.
+				2. Servlet executed by Web Container.
+				3. It is a Simple .java file.
+				4. Servlet is used to handle the request inside 
+					web container.
+
+
+			//LAB - Helloworld Using Servlet
+
+			      - download tomcat server.
+					-https://tomcat.apache.org/download-80.cgi
+			      - java 8 
+					-https://www.oracle.com/in/java/technologies/downloads/#java8-windows
+			      - IDE - Eclipse
+				        -https://www.eclipse.org/downloads/packages/
+
+
+			s-1  create dynamic web project using Eclipse IDE.
+			s-2  deploy the project inside the server.
+			s-3  define web.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>HelloWorldApp</display-name>
+  <servlet>
+  		<servlet-name>HelloWorld</servlet-name>
+  		<servlet-class>com.HelloWorld</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	  	<servlet-name>HelloWorld</servlet-name>
+  	  	<url-pattern>/hello</url-pattern>
+  </servlet-mapping>
+</web-app>
+
+			s-4   define servlet  
+			s-5   deploy and test
+					http://localhost:8082/HelloWorldApp/
+
+
+
+		
+
+
+
+	 J2EE 7 = Java 2 Enterprise Edition  
+		
+		//Servlet API :
+			javax.servlet.http.*
+			javax.servelt.*
+			javax.servlet.annotation
+			javax.servlet.descriptor
+		- servlet life cycle methods are defined in the GenericServlet.
+
+
+
+		//POST Request Using Servlet- Login
+
+
+
+
+		s-1  create LoginPage.html 
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+		<h1> welcome To Login Page</h1>
+		<form action="HelloWorld" method="post">
+		UserId :  <input type="text"  name="userid" /><br>
+		<input type="submit" value="submit"/>
+		</form>
+
+</body>
+</html>
+		s-2  create logic inside Helloworld.java
+
+public class HelloWorld extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		
+		String userid =  request.getParameter("userid");
+		
+		out.println("<h1>This is Login demo</h1>");
+		out.println("The usser id is"+userid);
+	}
+}
+
+
+		s-3  web.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>HelloWorldApp</display-name>
+  <welcome-file-list>
+  	<welcome-file>login.html</welcome-file>
+  </welcome-file-list>
+  <servlet>
+  		<servlet-name>HelloWorld</servlet-name>
+  		<servlet-class>com.HelloWorld</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	  	<servlet-name>HelloWorld</servlet-name>
+  	  	<url-pattern>/HelloWorld</url-pattern>
+  </servlet-mapping>
+</web-app>
+
+		s-4 
+		Deploy and Test 
+		http://localhost:8082/HelloWorldApp/
+
+
+
+		//Servlet using Annotation.
+
+		s-1 create html
+
+		<form action="RegServlet" method="post">
+		<input type="submit" value="Registration"/>
+		</form>
+
+
+
+		s-2 create servelt using annotation
+
+@WebServlet("/RegServlet")
+public class RegServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+      
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		out.println("<h1>Registration Servlet Executed Using Annotation</h1>");
+	}
+
+}
+
+		s-3 deploy and test
+
+
+
+
+		HandsOn :
+			- ChangePassword using  Servlet.(with web.xml)
+			- LoginCheck using Servlet.(without web.xml)
+
+
+
+
+		what we have done last day ?
+		TOPICS :
+			Developing Web Applications Using Session Management
+			Using Cookies for Session Management
+			Using URL Rewriting for Session Management
+			LAB - 3 Page App For Scope  Using Servlet
+
+			Servlet and JSP 
+			
+			Describe JSP Pages technology
+			LAB-HellowWorld Using JSP
+			Write JSP code using scripting elements
+			Write JSP code using the page directive
+			Write JSP code using standard tags
+			Write JSP code using expression language (EL)
+
+			LAB-Login Usig JSP
+			LAB-3 Page App For Scope  Using JSP
+
+
+			HandsOn :
+			- ChangePassword using  JSP.
+			- LoginCheck using JSP.
+
+
+			
+		
+
+		//Servlet web application Scope
+
+				A. request - exist between two page only
+				B. session - exist more than two page
+				C. application scope - exist in all the servlet
+
+
+		//Session Management
+			Using HttpSession
+						//assign value in the session
+						HttpSession session = request.getSession(true);
+						session.setAttribute("UID", userid);
+
+						//retrive
+						HttpSession session = request.getSession(false);
+						String sid = (String) session.getAttribute("UID");
+		
+			Using Cookies 
+						Cookie c = new Cookie("UNAME", name);
+						response.addCookie(c);
+
+						String name = null;
+			`			Cookie[] allCookies = request.getCookies();
+						for ( int i=0; i < allCookies.length; i++ ) {
+		  				if ( allCookies[i].getName().equals("UNAME") ) {
+							name = allCookies[i].getValue();
+						}
+						}
+		
+			Using URL Rewriting 
+
+						 out.print("<a href='Servlet2?userid="+userid+"'>Next</a>");  
+
+
+
+			JSP  = Java Server Pages
+			     = 2.x
+			     = Dynamic component
+			     = web component
+			     = execute jsp in the UI or Web Container
+			     = Inside jsp page we can write java code
+				
+ 
+		
+				emp.html   - static component
+			        emp.jsp    - dynamic component
+
+
+					   jsp-api.jar
+			        emp.jsp  ----------->  emp.java(servlet)
+
+
+						servlet-api.jar
+				LoginServlet.java  ---------->    LoginServlet.class
+
+
+
+
+			Servlet   	= >          JSP
+
+		1. we write huge java code  	1.we write less java code.
+
+		2. we write html inside java  	2. we write java inside html.
+
+
+
+			NEXT :
+
+			Web Application Using MVC
+
+			LAB-Login Usig JSP
+
+                        Scope In JSP 
+				- JSP also have 4 type of Scope
+				- A. page - only inside the page
+				- B. request - between two page
+				- C. session - more than two page in user session
+				- D. application - available to all the jsp
+
+			LAB- 3 Page App For Scope  Using JSP
+
+
+			MVC Application Using JSP
+                                - we have to make model , view and controller independent.
+				- We should remove java code from jsp.
+				   JSP Scriptlets - NO
+				   JSP Action - NO
+				   JSP Tag library - YES (Complex)
+				   JSP EL - YES 
+
+
+
+		HandsOn :
+			- ChangePassword using  JSP.
+			- LoginCheck using JSP.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
